@@ -74,6 +74,7 @@ NOTES
 start with seed.sql
 continue with the different routes, adding, editing and deleting
 
+```js
 
 * user Routes
 GET getAllUsers "/api/users"
@@ -100,7 +101,7 @@ PATCH editNoteForUser "/api/notes/:id"
 
 DELETE deleteNoteForUser "/api/notes/:id"
 
-
+```
 
 
 ## Frontend
@@ -110,6 +111,8 @@ have button to edit, delete and move note,
 CSS
 
 ## components Tree
+
+```js
 
                                    APP
                            __________|__________
@@ -125,18 +128,18 @@ CSS
            |            |
 SAVED TO SHORTCUT  SAVE TO NOTEBOOKS
 
+```
 
 ##  Implementation Timeline
-Phase 1: Backend setup and Frontend setup (4 days)
-Phase 2: User Model, API, Search, and Components (5 days)
-Objective: Users can be created, edit, searched for, and delete notes. (4 days)
-Phase 3: Login page  with frontend authentication (3 days)
-work on some css using my preferred color scheme
-Phase 4: login and user page (2 days)
-Objective: bonus features.
-Phase 5: Advanced Search/Pagination for Users Index, expend page and sharing (2 day)
-Objective: Add pagination/infinite scroll to users index. Add search by more parameters (username, summary, etc.).
 
+1. Backend setup and Frontend setup (4 days)
+2. User Model, API, Search, and Components (5 days)
+Objective: Users can be created, edit, searched for, and delete notes. (4 days)
+3. Login page with frontend authentication (3 days)
+work on some css using my preferred color scheme
+4. login and user page (2 days)
+Objective: bonus features.
+5. Advanced Search/Pagination for Users Index, expend page and sharing (2 day)
 
 ## Features
 add notebook - add notes

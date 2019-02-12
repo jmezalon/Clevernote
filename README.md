@@ -178,5 +178,5 @@ state = {
     errors: {
       login: ["Incorrect username/password combination"]
     }
-  }  
+  }
   ```

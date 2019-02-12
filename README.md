@@ -2,6 +2,7 @@
 ## MVP
 My project is a web application inspired by Evernote and built using Express in the backend and React/Redux for the frontend. By the end of this month, this website will, at a minimum, satisfy the following criteria with smooth, bug-free navigation, adequate seed data and sufficient CSS styling:
 
+https://trello.com/b/MU2YSRRo/evernote-clone  [Link to TRELLO]
 
 1. New account creation, login, and guest/demo login
 2. A production README
@@ -46,6 +47,8 @@ if I have extra time, I will work on the tag button and on the help section in t
 
 
 In my Schema, we will have the user, the notebooks and the notes
+// removed snippet and user_id in notes
+// added notebook_type
 
 ```js
 USERS
@@ -56,26 +59,76 @@ USERS
 * profile_pic
 NOTEBOOKS
 * id
+* notebook_type  -- can include regular, trash, favorite, etc.
 * user_id
 * Title
 NOTES
 * id
 * title
-* user_id
 * notebook_id on delete cascade
-* snippets
+* body
+* tag
 PHOTOS (OPTIONAL)
 * id
 * user_id
 ```
 
+## backend
+start with seed.sql
+continue with the different routes, adding, editing and deleting
+
+GET getNotes "/api/notebook/:id/notes"
+
+GET getNote "/api/note/:id"
+
+POST addNote "/api/note"
+
+PATCH editNote "/api/note/:id"
+
+DELETE deleteNote "/api/note/:id"
+
+
+
 ## Frontend
+User Login Page,
+Save Note and Show snippet,
+have button to edit, delete and move note,
+CSS
+
+## components Tree
+
+                                   APP
+                           __________|__________
+                          |                     |
+                          |                     |
+                      ALL NOTES             SIDEBAR
+                          |                     |
+                   _______|________             |_____
+                  |                |                  |
+              CURRENT NOTE       NEW NOTE   LINK TO ADD, EDIT, TRASH
+                  |                |
+            ______|_____      EDIT & DELETE
+           |            |
+SAVED TO SHORTCUT  SAVE TO NOTEBOOKS
 
 
+##  Implementation Timeline
+Phase 1: Backend setup and Frontend setup (4 days)
+Phase 2: User Model, API, Search, and Components (5 days)
+Objective: Users can be created, edit, searched for, and delete notes. (4 days)
+Phase 3: Login page  with frontend authentication (3 days)
+work on some css using my preferred color scheme
+Phase 4: login and user page (2 days)
+Objective: bonus features.
+Phase 5: Advanced Search/Pagination for Users Index, expend page and sharing (2 day)
+Objective: Add pagination/infinite scroll to users index. Add search by more parameters (username, summary, etc.).
 
-## Components
+
+## Features
 add notebook - add notes
 edit notebook - edit notes
+move notes to different notebook
+Tag to help with searching
 delete notes
 delete notebook which will delete all the notes inside
 
@@ -86,18 +139,17 @@ delete notebook which will delete all the notes inside
     users: {
       12: {
         id: 44,
-        profile_pic: "image/url/foaioqwehje"
+        profile_pic: "image/url/foaioqwehje",
+        note: null,
+        allNote: null
       }
     },
-    session: {
+    note: {
       currentUser: {
         id: 45,
         username: "Jean Max Mezalon",
-        profile_pic: "image/url/"
+        notebook_id: 1
       }
-    },
-    ui: {
-      loading: true/false
     },
     errors: {
       login: ["Incorrect username/password combination"]

@@ -94,9 +94,11 @@ DELETE deleteNotebookForUser "/api/user/:id/notebooks/:id"
 * note Route
 GET getOneNoteForUser "/api/notes/:id"
 
+POST addNoteForUser "/notes"
+
 PATCH editNoteForUser "/api/notes/:id"
 
-DELETE deleteNoteForUser "/api/:id/notes/:id"
+DELETE deleteNoteForUser "/api/notes/:id"
 
 
 

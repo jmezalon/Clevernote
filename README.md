@@ -52,22 +52,24 @@ In my Schema, we will have the user, the notebooks and the notes
 
 ```js
 USERS
-* id
-* full name   - not null
-* email       - not null
-* password
-* profile_url   -optional
+* id SERIAL PRIMARY KEY
+* full name VARCHAR NOT NULL
+* email VARCHAR NOT NULL
+* profile_url VARCHAR optional
+* created_at TIMESTAMP
 NOTEBOOKS
-* id
-* notebook_type  -- can include regular, trash, favorite, etc, not null
-* user_id   - not null
-* Title   - not null
+* id SERIAL PRIMARY KEY
+* notebook_type VARCHAR NOT NULL can include regular, trash, favorite, etc
+* user_id INT REFERENCES notebooks(id) ON DELETE CASCADE
+* Title VARCHAR NOT NULL
+* created_at TIMESTAMP
 NOTES
-* id
-* title     optional
-* notebook_id on delete cascade
-* body      - not null
-* tag       - optional
+* id SERIAL PRIMARY KEY
+* title  VARCHAR UNIQUE optional
+* notebook_id on INT REFERENCES notebooks(id) ON DELETE CASCADE
+* body TEXT NOT NULL
+* tag VARCHAR optional
+* created_at TIMESTAMP
 ```
 
 ## backend

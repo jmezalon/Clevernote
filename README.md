@@ -53,39 +53,51 @@ In my Schema, we will have the user, the notebooks and the notes
 ```js
 USERS
 * id
-* full name
-* email
+* full name   - not null
+* email       - not null
 * password
-* profile_pic
+* profile_url   -optional
 NOTEBOOKS
 * id
-* notebook_type  -- can include regular, trash, favorite, etc.
-* user_id
-* Title
+* notebook_type  -- can include regular, trash, favorite, etc, not null
+* user_id   - not null
+* Title   - not null
 NOTES
 * id
-* title
+* title     optional
 * notebook_id on delete cascade
-* body
-* tag
-PHOTOS (OPTIONAL)
-* id
-* user_id
+* body      - not null
+* tag       - optional
 ```
 
 ## backend
 start with seed.sql
 continue with the different routes, adding, editing and deleting
 
-GET getNotes "/api/notebook/:id/notes"
 
-GET getNote "/api/note/:id"
+* user Routes
+GET getAllUsers "/api/users"
 
-POST addNote "/api/note"
+GET getOneUser "/api/users/:id"
 
-PATCH editNote "/api/note/:id"
+* notebook Route
+GET getUserNotebooks "/api/user/:id/notebooks"
 
-DELETE deleteNote "/api/note/:id"
+GET getAllNotesFromNotebook "/api/notebooks/:id/notes"
+
+POST addNotebookForUser "/notebooks/:id"
+
+PATCH editNotebookForUser "/notebooks/:id"
+
+DELETE deleteNotebookForUser "/api/user/:id/notebooks/:id"
+
+* note Route
+GET getOneNoteForUser "/api/notes/:id"
+
+PATCH editNoteForUser "/api/notes/:id"
+
+DELETE deleteNoteForUser "/api/:id/notes/:id"
+
 
 
 

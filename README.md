@@ -82,15 +82,17 @@ GET getAllUsers "/api/users"
 GET getOneUser "/api/users/:id"
 
 * notebook Route
+GET getAllNotebooks "/notebooks"
+
 GET getUserNotebooks "/api/user/:id/notebooks"
 
 GET getAllNotesFromNotebook "/api/notebooks/:id/notes"
 
-POST addNotebookForUser "/notebooks/:id"
+POST addNotebookForUser "/api/notebooks"
 
 PATCH editNotebookForUser "/notebooks/:id"
 
-DELETE deleteNotebookForUser "/api/user/:id/notebooks/:id"
+DELETE deleteNotebookForUser "/notebooks/:id"
 
 * note Route
 GET getOneNoteForUser "/api/notes/:id"
@@ -150,26 +152,29 @@ delete notes
 delete notebook which will delete all the notes inside
 
 ## SAMPLE STATE
-
-{
-  notebooks: {
-    users: {
-      12: {
-        id: 44,
-        profile_pic: "image/url/foaioqwehje",
-        note: null,
-        allNote: null
-      }
+```js
+state = {
+  users = {
+    id: 1,
+    username: "john424",
+    email: "jhony424@gmail.com",
+    profile_pic: "https://static.boredpanda.com/blog/wp-content/uploads/2018/04/5acb63d83493f__700-png.jpg"
     },
+  notebooks: {
+    id: 2,
+    user_id: 3,
+    title: "Bucket list"
+    notebook_type: "trash"
+  }
     note: {
-      currentUser: {
         id: 45,
-        username: "Jean Max Mezalon",
-        notebook_id: 1
-      }
+        notebook_id: 1,
+        title: "todo list",
+        body: "buy milk, shop for ring, ...",
+        tag: "findList"    
     },
     errors: {
       login: ["Incorrect username/password combination"]
     }
   }  
-}
+  ```

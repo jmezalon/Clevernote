@@ -79,31 +79,41 @@ continue with the different routes, adding, editing and deleting
 ```js
 
 * user Routes
-GET getAllUsers "/api/users"
+GET getAllUsers "/api/users" [/done]
 
-GET getOneUser "/api/users/:id"
+GET getSingleUser "/api/users/:id" /done
+
+GET getUserNotebooks "/api/:id/notebooks" /done
+
+POST createUser "/api/users" /done
+
+PUT editUser "/api/user/:id" /done
+
+DELETE removeUser "/api/user/:id" /done
 
 * notebook Route
-GET getAllNotebooks "/notebooks"
+GET getAllNotebooks "/notebooks" /done
 
-GET getUserNotebooks "/api/user/:id/notebooks"
+GET getSingleNotebook "/notebooks/:id" /done
 
-GET getAllNotesFromNotebook "/api/notebooks/:id/notes"
+GET getAllNotesFromOneNotebook "/api/notebooks/:id/notes" /done
 
-POST addNotebookForUser "/api/notebooks"
+POST addNotebookForUser "/api/notebooks" /done
 
-PATCH editNotebookForUser "/notebooks/:id"
+PATCH editNotebookForUser "/notebooks/:id" /done
 
-DELETE deleteNotebookForUser "/notebooks/:id"
+DELETE deleteNotebookForUser "/notebooks/:id" /done
 
 * note Route
-GET getOneNoteForUser "/api/notes/:id"
+GET getAllNotes "/notes"
 
-POST addNoteForUser "/notes"
+GET getOneNote "/api/notes/:id"
 
-PATCH editNoteForUser "/api/notes/:id"
+POST createNote "/notes"
 
-DELETE deleteNoteForUser "/api/notes/:id"
+PATCH editNote "/api/notes/:id"
+
+DELETE deleteNote "/api/notes/:id"
 
 ```
 

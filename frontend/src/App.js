@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Sidebar } from './components/Sidebar';
+import AllNotes from './components/AllNotes';
+import Trash from './components/Trash.js';
+import Notebooks from './components/Notebook.js';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Sidebar />
+        <Switch>
+          <Route exact path="/notes" component={AllNotes} />
+          <Route exact path="/notebooks/2/notes" component={Trash} />
+          <Route exact paty="/notebooks" component={Notebooks} />
+        </Switch>
       </div>
     );
   }

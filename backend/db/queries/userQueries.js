@@ -44,11 +44,15 @@ const getUserNotebooks = (req, res, next) => {
   .catch(err => next(err));
 }
 
+const authHelpers = require(".../auth/helpers");
 
 const createUser = (req, res, next) => {
+  const hash = authHelpers.createHash(req.body.password);
+
+
   req.body.profile_pic = req.body.profile_pic ? parseInt(req.body.profile_pic) : null
   //ask about TIMESTAMP
-  db.none('INSERT INTO users(full_name, email, profile_pic) VALUES(${full_name}, ${email}, ${profile_pic})', req.body)
+  db.none('INSERT INTO users(email, profile_pic, password_digest) VALUES(${email}, ${profile_pic}, ${password})', { email: req.body, password: hash })
   .then(() => {
     res.status(200)
     .json({
@@ -56,7 +60,28 @@ const createUser = (req, res, next) => {
       message: 'you added a new user'
     })
   })
-  .catch(err => next(err));
+  .catch(err => {
+    res.status(500).json({
+      message: err
+    })
+  });
+}
+
+function logoutUser(req, res, next) {
+  req.logout();
+  res.status(200).send("log out success");
+}
+
+function loginUser(req, res) {
+  res.json(req.user);
+}
+
+function isLoggedIn(req, res) {
+  if (req.user) {
+    res.json({ username: req.user });
+  } else {
+    res.json({ username: null });
+  }
 }
 
 const deleteUser = (req, res, next) => {
@@ -94,4 +119,4 @@ const updateUser = (req, res, next) => {
 };
 
 
-module.exports = { getAllUsers, getSingleUser, getUserNotebooks, createUser, deleteUser, updateUser };
+module.exports = { getAllUsers, getSingleUser, getUserNotebooks, createUser, deleteUser, logoutUser, loginUser, isLoggedIn, updateUser };

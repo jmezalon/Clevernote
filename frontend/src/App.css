@@ -1,7 +1,6 @@
 .App {
   text-align: left;
-  display: grid;
-  grid-template-columns: 20% 80%;
+  background-color: #F7FCF9;
 }
 
 
@@ -12,6 +11,11 @@
   background-color: gray;
   color: white;
   min-height: 100%;
+}
+
+.loggedin {
+  display: grid;
+  grid-template-columns: 20% 80%;
 }
 
 .allnotes {

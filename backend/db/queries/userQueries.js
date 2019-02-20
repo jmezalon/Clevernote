@@ -1,4 +1,5 @@
 const { db } = require('./index.js');
+// const authHelpers = require("../auth/helpers.js");
 
 
 const getAllUsers = (req, res, next) => {
@@ -44,7 +45,6 @@ const getUserNotebooks = (req, res, next) => {
   .catch(err => next(err));
 }
 
-const authHelpers = require(".../auth/helpers");
 
 const createUser = (req, res, next) => {
   const hash = authHelpers.createHash(req.body.password);

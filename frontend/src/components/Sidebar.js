@@ -11,7 +11,7 @@ export const Sidebar = () => {
         <input type='text' className='searchbar' placeholder='search all notes' />
         </div>
         <div className='newNote'>
-        <NavLink to={'/notes'}>New note</NavLink>
+        <NavLink to={'/new'}>New note</NavLink>
         </div>
         <NavLink to={'/notebooks/:id/notes'}>Shortcuts</NavLink>
         <NavLink to={'/notes'}>All notes</NavLink>

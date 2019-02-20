@@ -1,5 +1,14 @@
 import React from 'react';
 
+/*
+<Writingsection
+handleChange={this.handleChange}
+title={this.state.title}
+body={this.state.body}
+tag={this.state.tag}
+handleSubmit={this.handleSubmit}
+/>
+*/
 
 export const NewNote = () => {
   return (

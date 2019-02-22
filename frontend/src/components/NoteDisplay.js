@@ -13,6 +13,7 @@ export const NoteDisplay = ({ notes }) => {
   })
   return (
     <div className="notedisplay">
+    <input type="text" value={notes[0] ? notes[0].title : ""} />
     {thenotes[0]}
     </div>
   )

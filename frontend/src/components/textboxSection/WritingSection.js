@@ -1,21 +1,33 @@
 import React from 'react';
 
 
-export const Writingsection = ({ handleChange, handleSubmit, title, body, tag, notebook_id }) => {
+export const Writingsection = ({ notetype, createNote, noteSetting, notetoedit, notes }) => {
+  
+  const handleChange = (e) => {
+    let note = {...notetoedit}
+    note[e.target.name] = e.target.value
+    noteSetting(note, notetype)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    createNote(notetoedit)
+  }
+
   return (
     <div className="writingsection">
     <p>a link to the notebook name</p>
     <hr />
     <form className='writingform' onSubmit={handleSubmit}>
-    <textarea className="titlebox" rows='2' cols='72' type="text" placeholder="Title" wrap='soft' onChange={handleChange} name="title" value={title} />
+    <textarea className="titlebox" rows='2' cols='72' type="text" placeholder="Title" wrap='soft' onChange={handleChange} name="title" value={notetoedit ? notetoedit.title : ""} />
 
-    <textarea rows='20' cols='72' wrap='soft' overflow='scroll'  name="body" placeholder="Click on a note to view or edit" type="text" onChange={handleChange} value={body} />
+    <textarea rows='20' cols='72' wrap='soft' overflow='scroll'  name="body" placeholder="click to view or edit a note" value={notetoedit ? notetoedit.body : ""} type="text" onChange={handleChange} />
     <hr />
-    <input type="text" name="tag" onChange={handleChange} value={tag} placeholder="add tag" />
+    <input type="text" name="tag" onChange={handleChange} value={notetoedit.tag ? notetoedit.tag : ""} placeholder="add tag" />
     <br />
     <button type="submit" className="addnewnote">add note</button>
     </form>
-    
+
     </div>
   )
 }

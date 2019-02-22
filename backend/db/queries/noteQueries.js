@@ -35,11 +35,12 @@ const createNote = (req, res, next) => {
   req.body.notebook_id = parseInt(req.body.notebook_id) ? parseInt(req.body.notebook_id) : null
   req.body.title = req.body.title ? req.body.title : null
   // should we have created_at in the insert below and if we do have it how do we add the TIMESTAMP
-  db.none('INSERT INTO notes(title, notebook_id, body, tag) VALUES(${title}, ${notebook_id}, ${body}, ${tag})', req.body)
-  .then(() => {
+  db.one('INSERT INTO notes(title, notebook_id, body, tag) VALUES(${title}, ${notebook_id}, ${body}, ${tag}) RETURNING *', req.body)
+  .then((note) => {
     res.status(200)
     .json({
       status: 'success',
+      note: note,
       message: 'you added a new note'
     })
   })

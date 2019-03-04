@@ -8,6 +8,7 @@ CREATE TABLE users (
   full_name VARCHAR NOT NULL,
   email VARCHAR NOT NULL,
   profile_pic VARCHAR,
+  password_digest VARCHAR NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -27,9 +28,9 @@ CREATE TABLE notes (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (full_name, email, profile_pic) VALUES ('Jonelle Bain', 'jbain@gmail.com', 'https://static.boredpanda.com/blog/wp-content/uploads/2018/04/5acb63d83493f__700-png.jpg'), ('Max Mezalon', 'jmezalon@gmail.com', 'https://expo.advance.net/img/45df1909ad/width960/f2a_nederlandsekooikerhondjegrandbassetgriffonvendeen.jpeg'), ('Josh Lue', 'josh.luen@yahoo.com', 'https://www.guidedogs.org/wp-content/uploads/2018/01/Mobile.jpg'),
-('Ciara Johns', 'ciarajohns@hotmail.com', 'https://thenypost.files.wordpress.com/2018/10/102318-dogs-color-determine-disesases-life.jpg?quality=90&strip=all&w=618&h=410&crop=1'),
-('Kenny Joseph', 'kennkenn@aol.com', 'https://img.huffingtonpost.com/asset/5b7fdeab1900001d035028dc.jpeg?cache=sixpwrbb1s&ops=1910_1000');
+INSERT INTO users (full_name, email, profile_pic, password_digest) VALUES ('Jonelle Bain', 'jbain@gmail.com', 'https://static.boredpanda.com/blog/wp-content/uploads/2018/04/5acb63d83493f__700-png.jpg', 5422), ('Max Mezalon', 'jmezalon@gmail.com', 'https://expo.advance.net/img/45df1909ad/width960/f2a_nederlandsekooikerhondjegrandbassetgriffonvendeen.jpeg', 235235), ('Josh Lue', 'josh.lue@yahoo.com', 'https://www.guidedogs.org/wp-content/uploads/2018/01/Mobile.jpg', 2453),
+('Ciara Johns', 'ciarajohns@hotmail.com', 'https://thenypost.files.wordpress.com/2018/10/102318-dogs-color-determine-disesases-life.jpg?quality=90&strip=all&w=618&h=410&crop=1', 3345245),
+('Kenny Joseph', 'kennkenn@aol.com', 'https://img.huffingtonpost.com/asset/5b7fdeab1900001d035028dc.jpeg?cache=sixpwrbb1s&ops=1910_1000', 44362);
 
 INSERT INTO notebooks (notebook_type, user_id) VALUES ('Scientology', 1), ('Trash', 3), ('Math', 2), ('favorite', 4);
 

@@ -1,5 +1,5 @@
-const { db } = require('./index.js');
-// const authHelpers = require("../auth/helpers.js");
+const db  = require('./index.js');
+const authHelpers = require("../../auth/helpers.js");
 
 
 const getAllUsers = (req, res, next) => {
@@ -50,17 +50,18 @@ const createUser = (req, res, next) => {
   const hash = authHelpers.createHash(req.body.password);
 
 
-  req.body.profile_pic = req.body.profile_pic ? parseInt(req.body.profile_pic) : null
+  req.body.profile_pic = req.body.profile_pic ? req.body.profile_pic : null
   //ask about TIMESTAMP
-  db.none('INSERT INTO users(email, profile_pic, password_digest) VALUES(${email}, ${profile_pic}, ${password})', { email: req.body, password: hash })
+  db.none('INSERT INTO users(full_name, email, profile_pic, password_digest) VALUES(${full_name}, ${email}, ${profile_pic}, ${password})', { full_name: req.body.full_name, email: req.body.email, profile_pic: req.body.profile_pic, password: hash })
   .then(() => {
     res.status(200)
     .json({
       status: 'success',
-      message: 'you added a new user'
+      message: 'registration completed'
     })
   })
   .catch(err => {
+    console.log(err);
     res.status(500).json({
       message: err
     })
@@ -78,9 +79,9 @@ function loginUser(req, res) {
 
 function isLoggedIn(req, res) {
   if (req.user) {
-    res.json({ username: req.user });
+    res.json({ email: req.user });
   } else {
-    res.json({ username: null });
+    res.status(401).json({ err: "Nobody logged in"});
   }
 }
 

@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import { Sidebar } from './components/Sidebar';
+import {Sidebar} from './components/Sidebar';
 import AllNotes from './components/AllNotes';
 import Trash from './components/Trash.js';
 import Notebooks from './components/Notebook.js';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn'
 import { Writingsection } from './components/textboxSection/WritingSection';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 
 class App extends Component {
   state = {
+    user: [],
     notes: [],
     selection: {},
-    newnote: {}
+    newnote: {},
+    loggedIn: false
   }
 
   getAllNotes = () => {
@@ -23,6 +27,13 @@ class App extends Component {
       })
     }).catch(err => {
       console.log(err, 'notes err');
+    })
+  }
+
+  editNote = (selection) => {
+    axios.patch("/notes", selection)
+    .then(res => {
+      console.log(res);
     })
   }
 
@@ -38,7 +49,45 @@ class App extends Component {
     })
   }
 
+  signUpUser = (user) => {
+    return axios.post('/users/signup', user)
+    .catch(err => {
+      console.log("creating user Error", err);
+    })
+  }
 
+  loginUser = (email, password) => {
+    return axios.post('/users/login', {
+      email: email,
+      password: password
+    })
+    .then(res => {
+      this.setState({
+        user: res.data,
+        loggedIn: true
+      })
+      return true
+    })
+    .catch(err => {
+       this.setState({
+        loggedIn: false
+      })
+      return false
+    })
+  }
+
+  logoutUser = () => {
+    return axios.post('/users/logout')
+    .then(res => {
+      this.setState({
+        loggedIn: false
+      })
+    })
+    .then(res => this.props.history.push("/signin"))
+    .catch(err => {
+      console.log("logout err", err);
+    })
+  }
 
   handleClick = (event) => {
     const selectednote = this.state.notes.find(note => {
@@ -73,15 +122,18 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
-        <Sidebar />
+      <div className={ this.state.loggedIn ? "App" : "SignIn"}>
+
+        {this.state.loggedIn ? <Sidebar  logoutUser={this.logoutUser} user={this.state.user} /> : ""}
           <Switch>
-            <Route exact path="/notes" render={(props) => <AllNotes handleClick={this.handleClick}
+            <Route exact path="/signup" render={(props) => <SignUp {...props} signUpUser={this.signUpUser} loginUser={this.loginUser} /> } />
+            <Route exact path="/signin" render={(props) => <SignIn {...props} loginUser={this.loginUser} /> } />
+            {this.state.loggedIn ? <Route exact path="/notes" render={(props) => <AllNotes handleClick={this.handleClick}
             noteSetting={this.noteSetting}
             notetoedit={this.state.selection}
             createNote={this.createNote}
             notes={this.state.notes}
-           /> } />
+           /> } /> : <Redirect to="signin" />}
             <Route exact path="/new" render={this.renderNewNote} />
             <Route exact path="/notebooks/2/notes" component={Trash} />
             <Route exact path="/notebooks" component={Notebooks} />
@@ -91,4 +143,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

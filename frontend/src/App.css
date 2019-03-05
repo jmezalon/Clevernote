@@ -6,15 +6,18 @@
 }
 
 .Signup {
-  
+
 }
 
+.writingsection {
+  background-color: lightgreen;
+}
 
 .sidebar {
   display: flex;
   flex-direction: column;
   align-content: space-between;
-  background-color: gray;
+  background-color: lightgreen;
   color: white;
   min-height: 100%;
 }
@@ -41,6 +44,6 @@
 }
 
 .midsection {
-  background: lightblue;
+  background: #F7FCF9;
   min-height: 100%;
 }

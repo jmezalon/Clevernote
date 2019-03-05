@@ -55,6 +55,7 @@ const createNote = (req, res, next) => {
 
 
 const editNote = (req, res, next) => {
+  // console.log(req.body)
   let queryStringArray = [];
   let bodyKeys = Object.keys(req.body);
   bodyKeys.forEach(key => {
@@ -71,7 +72,10 @@ const editNote = (req, res, next) => {
         message: "Updated a note!"
       });
     })
-    .catch(err => next(err));
+    .catch(err => {
+      console.log(err)
+      return next(err)
+    });
 };
 
 const deleteNote = (req, res, next) => {

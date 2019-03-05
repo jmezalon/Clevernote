@@ -57,17 +57,27 @@ axios.get('/notebooks')
     })
   }
 
-  editNote = (selection) => {
-    axios.patch("/notes", selection)
+  editNote = (note) => {
+    let notes = {
+      title: this.state.selection.title,
+      tag: this.state.selection.tag,
+      body: this.state.selection.body,
+      notebook_id: this.state.selection.notebook_id
+    }
+    let noteId = parseInt(this.state.selection.id)
+    axios.patch(`/notes/${noteId}`,  notes )
     .then(res => {
-      console.log(res);
+      this.getAllNotes()
+    })
+    .catch(err => {
+      console.log("post err", err);
     })
   }
 
   createNote = (note) => {
+
     axios.post("/notes",  note )
     .then(res => {
-      debugger
       this.setState({
         notes: [...this.state.notes, res.data.note]
       })
@@ -163,7 +173,7 @@ axios.get('/notebooks')
             {this.state.loggedIn ? <Route exact path="/notes" render={(props) => <AllNotes handleClick={this.handleClick}
             noteSetting={this.noteSetting}
             notetoedit={this.state.selection}
-            createNote={this.createNote}
+            editNote={this.editNote}
             notes={this.state.notes}
             selection={this.state.selection}
            /> } /> : <Redirect to="signin" />}

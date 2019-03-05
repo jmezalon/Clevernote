@@ -15,7 +15,7 @@ CREATE TABLE users (
 CREATE TABLE notebooks (
   id SERIAL PRIMARY KEY,
   notebook_type VARCHAR NOT NULL,
-  user_id INT REFERENCES notebooks(id) ON DELETE CASCADE,
+  user_id INT REFERENCES users(id) ON DELETE CASCADE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

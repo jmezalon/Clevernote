@@ -2,7 +2,8 @@ const db = require('./index.js');
 
 
 const getAllNotebooks = (req, res, next) => {
-  db.any('SELECT * FROM notebooks')
+  let userid = req.user.id
+  db.any('SELECT * FROM notebooks WHERE user_id=$1', [userid])
   .then(notebooks => {
     res.status(200)
     .json({
@@ -45,7 +46,7 @@ const getAllNotesFromOneNotebook = (req, res, next) => {
 
 
 const createNotebook = (req, res, next) => {
-  req.body.user_id = req.body.user_id ? parseInt(req.body.user_id) : null
+  req.body.user_id = parseInt(req.body.user_id) ? parseInt(req.body.user_id) : null
   // should we have created_at in the insert below and if we do have it how do we add the TIMESTAMP
   db.none('INSERT INTO notebooks(notebook_type, user_id) VALUES(${notebook_type}, ${user_id})', req.body)
   .then(() => {

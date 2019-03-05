@@ -2,7 +2,13 @@ const db = require('./index.js');
 
 
 const getAllNotes = (req, res, next) => {
-  db.any('SELECT * FROM notes')
+  userid = req.user.id
+  db.any(`SELECT notes.id, notes.notebook_id, notes.body, notes.title, notes.tag
+  FROM notebooks AS nb
+  FULL JOIN users AS u
+  ON nb.user_id = u.id
+  JOIN notes ON notes.notebook_id = nb.id
+  WHERE u.id =$1`, [userid])
   .then(notes => {
     res.status(200)
     .json({

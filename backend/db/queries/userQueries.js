@@ -78,6 +78,7 @@ function loginUser(req, res) {
 }
 
 function isLoggedIn(req, res) {
+
   if (req.user) {
     res.json({ email: req.user });
   } else {

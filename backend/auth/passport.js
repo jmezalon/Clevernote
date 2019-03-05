@@ -11,7 +11,7 @@ module.exports = () => {
       email: email
     })
       .then(user => {
-        done(null, user.email);
+        done(null, user);
       })
       .catch(err => {
         done(err, null);

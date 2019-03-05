@@ -16,8 +16,35 @@ class App extends Component {
     notes: [],
     selection: {},
     newnote: {},
+    notebooks: [],
+    notebookSelection: {},
     loggedIn: false
   }
+
+//////////////
+
+handleNotebookClick = (event) => {
+  const selectednotebook = this.state.notebooks.find(notebook => {
+    return notebook.id === parseInt(event.target.dataset.notebook_id)
+  })
+
+  this.setState({
+    notebookSelection: selectednotebook
+  })
+}
+
+getAllNotebooks = () => {
+axios.get('/notebooks')
+.then(res => {
+  this.setState({
+    notebooks: res.data.notebooks
+  })
+})
+}
+
+
+/////////////
+
 
   getAllNotes = () => {
     axios.get("/notes")
@@ -40,6 +67,7 @@ class App extends Component {
   createNote = (note) => {
     axios.post("/notes",  note )
     .then(res => {
+      debugger
       this.setState({
         notes: [...this.state.notes, res.data.note]
       })
@@ -112,6 +140,9 @@ class App extends Component {
        notetype="newnote"
        notetoedit={this.state.newnote}
        noteSetting={this.noteSetting} createNote={this.createNote}
+       notes={this.state.notes}
+       notebooks={this.state.notebooks}
+       selection={this.state.selection}
        />
      )
    }
@@ -119,6 +150,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getAllNotes()
+    this.getAllNotebooks()
   }
   render() {
     return (
@@ -137,7 +169,8 @@ class App extends Component {
            /> } /> : <Redirect to="signin" />}
             <Route exact path="/new" render={this.renderNewNote} />
             <Route exact path="/notebooks/2/notes" component={Trash} />
-            <Route exact path="/notebooks" component={Notebooks} />
+            <Route exact path="/notebooks" render={(props) => <Notebooks {...props} notebooks={this.state.notebooks}
+            handleNotebookClick={this.handleNotebookClick} /> } />
           </Switch>
       </div>
     );

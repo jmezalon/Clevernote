@@ -1,13 +1,21 @@
 import React from 'react';
 
 
-export const Writingsection = ({ notetype, createNote, noteSetting, notetoedit, notes, selection }) => {
+export const Writingsection = ({ notebooks, notetype, createNote, noteSetting, notetoedit, notes, selection }) => {
 
   const handleChange = (e) => {
     let note = {...notetoedit}
     note[e.target.name] = e.target.value
     noteSetting(note, notetype)
   }
+let notebookList;
+if (notebooks) {
+  notebookList = notebooks.map((notebook) => {
+
+    return <option key={notebook.id}>{notebook.notebook_type}</option>
+  })
+
+}
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -16,7 +24,14 @@ export const Writingsection = ({ notetype, createNote, noteSetting, notetoedit, 
 
   return (
     <div className="writingsection">
-    <p>{selection.notebook_type}</p>
+    <textarea className="notebookname" rows='2' cols='72' type="text" placeholder="Your notebook" wrap='soft' onChange={handleChange} name="notebook_type" value={notetoedit ? notetoedit.notebook_type : ""} />
+    <br />
+    {notetype==="newnote" ?
+    <select>
+      {notebookList}
+    </select>
+    : ""}
+    <p></p>
     <hr />
     <form className='writingform' onSubmit={handleSubmit}>
     <textarea className="titlebox" rows='2' cols='72' type="text" placeholder="Title" wrap='soft' onChange={handleChange} name="title" value={notetoedit ? notetoedit.title : ""} />

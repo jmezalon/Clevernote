@@ -1,8 +1,8 @@
 import React from 'react';
 
 
-export const Writingsection = ({ notetype, createNote, noteSetting, notetoedit, notes }) => {
-  
+export const Writingsection = ({ notetype, createNote, noteSetting, notetoedit, notes, selection }) => {
+
   const handleChange = (e) => {
     let note = {...notetoedit}
     note[e.target.name] = e.target.value
@@ -16,7 +16,7 @@ export const Writingsection = ({ notetype, createNote, noteSetting, notetoedit, 
 
   return (
     <div className="writingsection">
-    <p>a link to the notebook name</p>
+    <p>{selection.notebook_type}</p>
     <hr />
     <form className='writingform' onSubmit={handleSubmit}>
     <textarea className="titlebox" rows='2' cols='72' type="text" placeholder="Title" wrap='soft' onChange={handleChange} name="title" value={notetoedit ? notetoedit.title : ""} />

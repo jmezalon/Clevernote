@@ -3,7 +3,7 @@ const db = require('./index.js');
 
 const getAllNotes = (req, res, next) => {
   userid = req.user.id
-  db.any(`SELECT notes.id, notes.notebook_id, notes.body, notes.title, notes.tag
+  db.any(`SELECT notes.id, notes.notebook_id, notes.body, notes.title, notes.tag, nb.notebook_type
   FROM notebooks AS nb
   FULL JOIN users AS u
   ON nb.user_id = u.id

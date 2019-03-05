@@ -1,11 +1,11 @@
 import React from 'react';
 
 
-export const NotebookMidSec = ({notebooks}) => {
-  let notebookList = notebooks.map(notes => {
+export const NotebookMidSec = ({notebooks, handleClick}) => {
+  let notebookList = notebooks.map((notebook, i) => {
     return (
-      <div key={notes.id}>
-        <h3>{notes.notebook_type}</h3>
+      <div data-notebook_id={notebook.id} key={notebook.id} onClick={handleClick}>
+        <h3 data-notebook_id={notebook.id}>{notebook.notebook_type}</h3>
         <br />
       </div>
     )
@@ -13,6 +13,8 @@ export const NotebookMidSec = ({notebooks}) => {
   return (
     <div className="trash">
     <h1>YOUR NOTEBOOKS</h1>
+    <input type="text" placeholder="add a new notebook"  />
+    <button>save</button>
     {notebookList}
     </div>
   )

@@ -133,6 +133,7 @@ class App extends Component {
             notetoedit={this.state.selection}
             createNote={this.createNote}
             notes={this.state.notes}
+            selection={this.state.selection}
            /> } /> : <Redirect to="signin" />}
             <Route exact path="/new" render={this.renderNewNote} />
             <Route exact path="/notebooks/2/notes" component={Trash} />

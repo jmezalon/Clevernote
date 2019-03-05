@@ -4,7 +4,18 @@ import { NotebookMidSec } from './midSection/NotebookMidSec';
 
 class Notebooks extends Component {
   state = {
-    notebooks: []
+    notebooks: [],
+    selection: {}
+  }
+
+  handleClick = (event) => {
+    const selectednotebook = this.state.notebooks.find(notebook => {
+      return notebook.id === parseInt(event.target.dataset.notebook_id)
+    })
+
+    this.setState({
+      selection: selectednotebook
+    })
   }
 
 getAllNotebooks = () => {
@@ -23,7 +34,7 @@ componentDidMount() {
   render() {
       return (
       <div className='thenotebooks'>
-        <NotebookMidSec notebooks={this.state.notebooks} />
+        <NotebookMidSec notebooks={this.state.notebooks} handleClick={this.handleClick} />
       </div>
     )
   }

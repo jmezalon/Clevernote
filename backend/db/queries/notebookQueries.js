@@ -31,7 +31,7 @@ const getSingleNotebook = (req, res, next) => {
 }
 
 const getAllNotesFromOneNotebook = (req, res, next) => {
-  let noteId = req.params.id
+  let noteId = parseInt(req.params.id)
   db.any('SELECT * FROM notes WHERE notebook_id=$1', noteId)
   .then(notes => {
     res.status(200)
@@ -46,13 +46,14 @@ const getAllNotesFromOneNotebook = (req, res, next) => {
 
 
 const createNotebook = (req, res, next) => {
-  req.body.user_id = parseInt(req.body.user_id) ? parseInt(req.body.user_id) : null
+  // req.body.user_id = parseInt(req.body.user_id) ? parseInt(req.body.user_id) : this.state.user.id
   // should we have created_at in the insert below and if we do have it how do we add the TIMESTAMP
-  db.none('INSERT INTO notebooks(notebook_type, user_id) VALUES(${notebook_type}, ${user_id})', req.body)
-  .then(() => {
+  db.one('INSERT INTO notebooks(notebook_type, user_id) VALUES(${notebook_type}, ${user_id}) RETURNING *', {user_id: parseInt(req.user.id), notebook_type: req.body.notebook_type})
+  .then((notebook) => {
     res.status(200)
     .json({
       status: 'success',
+      notebook: notebook,
       message: 'you added a new notebook'
     })
   })

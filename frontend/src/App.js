@@ -14,24 +14,22 @@ class App extends Component {
   state = {
     user: [],
     notes: [],
+
     selection: {},
     newnote: {},
     notebooks: [],
-    notebookSelection: {},
-    loggedIn: false
+
+    loggedIn: false,
+
   }
 
-//////////////
 
-handleNotebookClick = (event) => {
-  const selectednotebook = this.state.notebooks.find(notebook => {
-    return notebook.id === parseInt(event.target.dataset.notebook_id)
-  })
 
-  this.setState({
-    notebookSelection: selectednotebook
-  })
-}
+
+//////////// notebooks network request
+
+
+
 
 getAllNotebooks = () => {
   let userid = parseInt(this.state.user.id)
@@ -43,6 +41,20 @@ axios.get(`/notebooks/${userid}`)
 })
 }
 
+createNotebook = (notebook) => {
+  let userId = parseInt(this.state.user.id)
+  axios.post(`/notebooks/${userId}`, {notebook_type: notebook})
+  .then(res => {
+    this.setState({
+      notebooks: [res.data.notebook, ...this.state.notebooks]
+    })
+  })
+  .catch(err => {
+    console.log("notebook network err", err);
+  })
+}
+
+
 
 /////////////
 
@@ -52,6 +64,7 @@ axios.get(`/notebooks/${userid}`)
     axios.get(`/notes/${userid}`)
 
     .then(res => {
+      this.getAllNotebooks()
       this.setState({
         notes: res.data.notes
       })
@@ -168,11 +181,13 @@ axios.get(`/notebooks/${userid}`)
   componentDidMount() {
     this.getAllNotes()
     this.getAllNotebooks()
+    // this.getAllNotesFromOneNotebook()
   }
   render() {
+
+
     return (
       <div className={ this.state.loggedIn ? "App" : "SignIn"}>
-
         {this.state.loggedIn ? <Sidebar  logoutUser={this.logoutUser} user={this.state.user} /> : ""}
           <Switch>
             <Route exact path="/signup" render={(props) => <SignUp {...props} signUpUser={this.signUpUser} loginUser={this.loginUser} /> } />
@@ -187,8 +202,14 @@ axios.get(`/notebooks/${userid}`)
            /> } /> : <Redirect to="signin" />}
             <Route exact path="/new" render={this.renderNewNote} />
             <Route exact path="/notebooks/2/notes" component={Trash} />
-            <Route exact path="/notebooks" render={(props) => <Notebooks {...props} notebooks={this.state.notebooks}
-            handleNotebookClick={this.handleNotebookClick} /> } />
+            <Route exact path="/notebooks" render={(props) => <Notebooks {...props}
+            user={this.state.user}
+            notebooks={this.state.notebooks}
+            createNotebook={this.createNotebook}
+            getAllNotebooks={this.getAllNotebooks}
+            getAllNotesFromOneNotebook={this.getAllNotesFromOneNotebook}
+
+             /> } />
           </Switch>
       </div>
     );

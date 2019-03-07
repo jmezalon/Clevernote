@@ -10,7 +10,7 @@ router.get('/:id/notes', getAllNotesFromOneNotebook);
 
 router.patch('/:id', updateNotebook);
 
-router.post('/', createNotebook);
+router.post('/:id', createNotebook);
 
 router.delete('/:id', deleteNotebook);
 

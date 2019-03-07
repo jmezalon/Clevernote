@@ -10,6 +10,7 @@ class NotebookMidSec extends Component {
       notebookSelection: {},
       noteTitleList: [],
       notebooktitle: "",
+      guidance: false,
       singleNotebookNotes: []
     }
   }
@@ -48,7 +49,10 @@ class NotebookMidSec extends Component {
       e.preventDefault()
       await this.props.createNotebook(this.state.notebooktitle)
       await this.props.getAllNotebooks()
-      this.props.history.push("/new")
+      this.setState({
+        guidance: true
+      })
+      this.props.history.push("/notebooks")
     }
 
 
@@ -113,10 +117,14 @@ class NotebookMidSec extends Component {
       <input name="notebooktitle" onChange={this.handleNotebookTitleChange} value={this.state.notebooktitle} type="text" placeholder="add a new notebook"  />
       <button onClick={this.handleNotebookSubmit}>save</button>
 
+      {this.state.guidance ? <p>Cool, you just added a new notebook, now click on new note to add a note to it!!!</p> : ""}
+
 
       <ul>
       {notebookList}
       </ul>
+
+
 
       </div>
     )

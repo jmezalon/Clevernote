@@ -21,7 +21,7 @@ class SignIn extends React.Component {
     this.props.loginUser(this.state.email, this.state.password_digest)
     .then(res => {
       if(res) {
-        this.props.history.push("/notes")
+        this.props.history.push("/notebooks")
       }
     })
     .catch(err => {

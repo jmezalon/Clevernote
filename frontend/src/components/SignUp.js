@@ -23,7 +23,7 @@ class SignUp extends React.Component {
     e.preventDefault()
     this.props.signUpUser(this.state)
     .then(res => this.props.loginUser(this.state.email, this.state.password))
-    .then(res => this.props.history.push("/notes"))
+    .then(res => this.props.history.push("/notebooks"))
   }
 
   render() {

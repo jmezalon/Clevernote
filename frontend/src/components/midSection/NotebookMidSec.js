@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 
-export class NotebookMidSec extends Component {
+
+class NotebookMidSec extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -42,10 +44,11 @@ export class NotebookMidSec extends Component {
     }
 
 
-    handleNotebookSubmit = (e) => {
+    handleNotebookSubmit = async (e) => {
       e.preventDefault()
-      this.props.createNotebook(this.state.notebooktitle)
-      this.props.getAllNotebooks()
+      await this.props.createNotebook(this.state.notebooktitle)
+      await this.props.getAllNotebooks()
+      this.props.history.push("/new")
     }
 
 
@@ -119,3 +122,5 @@ export class NotebookMidSec extends Component {
     )
   }
 }
+
+export default withRouter(NotebookMidSec)

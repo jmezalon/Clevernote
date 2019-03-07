@@ -1,5 +1,5 @@
 import React from 'react';
-import { NotebookMidSec } from './midSection/NotebookMidSec';
+import NotebookMidSec  from './midSection/NotebookMidSec';
 
 const Notebooks = ({ notebooks, createNotebook, user, getAllNotebooks, getAllNotesFromOneNotebook }) =>{
 

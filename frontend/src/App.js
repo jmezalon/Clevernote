@@ -94,8 +94,18 @@ createNotebook = (notebook) => {
     let noteId = parseInt(this.state.user.id)
     axios.post(`/notes/${noteId}`,  note )
     .then(res => {
+      this.getAllNotebooks()
+      const notebook = this.state.notebooks.find(n => n.id === res.data.note.notebook_id);
+      const newNote = {
+        ...res.data.note,
+        notebook_type: notebook.notebook_type
+      }
+      console.log('this is newNote', newNote)
       this.setState({
-        notes: [...this.state.notes, res.data.note]
+        notes: [
+          ...this.state.notes,
+          newNote
+        ]
       })
     })
     .catch(err => {

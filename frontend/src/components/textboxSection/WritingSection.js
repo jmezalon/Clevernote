@@ -34,6 +34,7 @@ handleSubmit = (e) => {
     } else {
       this.props.createNote({...this.props.notetoedit, notebook_id: this.state.notebook_id })
     }
+    this.props.history.push("/notes")
   }
 
   handleChange = (e) => {
@@ -42,6 +43,10 @@ handleSubmit = (e) => {
     this.props.noteSetting(note, this.props.notetype)
   }
 
+  componentDidMount () {
+    this.props.noteSetting({}, "selection")
+    this.props.noteSetting({}, "newnote")
+  }
 
   render () {
     const { notebooks, notetype, notetoedit } = this.props

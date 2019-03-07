@@ -34,7 +34,8 @@ handleNotebookClick = (event) => {
 }
 
 getAllNotebooks = () => {
-axios.get('/notebooks')
+  let userid = parseInt(this.state.user.id)
+axios.get(`/notebooks/${userid}`)
 .then(res => {
   this.setState({
     notebooks: res.data.notebooks
@@ -47,7 +48,9 @@ axios.get('/notebooks')
 
 
   getAllNotes = () => {
-    axios.get("/notes")
+    let userid = parseInt(this.state.user.id)
+    axios.get(`/notes/${userid}`)
+
     .then(res => {
       this.setState({
         notes: res.data.notes
@@ -75,8 +78,8 @@ axios.get('/notebooks')
   }
 
   createNote = (note) => {
-
-    axios.post("/notes",  note )
+    let noteId = parseInt(this.state.user.id)
+    axios.post(`/notes/${noteId}`,  note )
     .then(res => {
       this.setState({
         notes: [...this.state.notes, res.data.note]
@@ -100,10 +103,13 @@ axios.get('/notebooks')
       password: password
     })
     .then(res => {
+
       this.setState({
         user: res.data,
         loggedIn: true
       })
+      this.getAllNotes()
+      this.getAllNotebooks()
       return true
     })
     .catch(err => {
@@ -158,6 +164,7 @@ axios.get('/notebooks')
    }
 
 
+
   componentDidMount() {
     this.getAllNotes()
     this.getAllNotebooks()
@@ -172,6 +179,7 @@ axios.get('/notebooks')
             <Route exact path="/signin" render={(props) => <SignIn {...props} loginUser={this.loginUser} /> } />
             {this.state.loggedIn ? <Route exact path="/notes" render={(props) => <AllNotes handleClick={this.handleClick}
             noteSetting={this.noteSetting}
+            notebooks={this.state.notebooks}
             notetoedit={this.state.selection}
             editNote={this.editNote}
             notes={this.state.notes}

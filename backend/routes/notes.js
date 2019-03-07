@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { getAllNotes, getOneNote, createNote, editNote, deleteNote } = require('../db/queries/noteQueries');
 
-router.get('/', getAllNotes);
+router.get('/:id', getAllNotes);
 
 router.get('/:id', getOneNote);
 
-router.post('/', createNote);
+router.post('/:id', createNote);
 
 router.patch('/:id', editNote);
 

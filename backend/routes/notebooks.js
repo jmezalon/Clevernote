@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getAllNotebooks, getSingleNotebook, getAllNotesFromOneNotebook, getUserNotebooks, createNotebook, updateNotebook, deleteNotebook } = require('../db/queries/notebookQueries');
 
-router.get('/', getAllNotebooks);
+router.get('/:id', getAllNotebooks);
 
 router.get('/:id', getSingleNotebook);
 

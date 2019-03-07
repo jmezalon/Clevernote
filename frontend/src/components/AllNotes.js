@@ -12,6 +12,7 @@ class AllNotes extends Component {
         <Writingsection
         notetype="selection"
         noteSetting={this.props.noteSetting}
+        notebooks={this.props.notebooks}
         notetoedit={this.props.notetoedit} editNote={this.props.editNote}
         selection={this.props.selection}
         />

@@ -5,7 +5,7 @@ import Trash from './components/Trash.js';
 import Notebooks from './components/Notebook.js';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn'
-import { Writingsection } from './components/textboxSection/WritingSection';
+import Writingsection from './components/textboxSection/WritingSection';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
@@ -14,13 +14,13 @@ class App extends Component {
   state = {
     user: [],
     notes: [],
-
+    noteSearch: "",
     selection: {},
     newnote: {},
     notebooks: [],
-
+    foundNotes: "",
     loggedIn: false,
-
+    noteFound: false
   }
 
 
@@ -100,12 +100,12 @@ createNotebook = (notebook) => {
         ...res.data.note,
         notebook_type: notebook.notebook_type
       }
-      console.log('this is newNote', newNote)
       this.setState({
         notes: [
           ...this.state.notes,
           newNote
-        ]
+        ],
+        noteFound: false
       })
     })
     .catch(err => {
@@ -156,6 +156,20 @@ createNotebook = (notebook) => {
     })
   }
 
+  handleNoteSearchChange = (e) => {
+    this.setState({
+      noteSearch: e.target.value
+    })
+  }
+
+  handleNoteSearchSubmit = (e) => {
+    e.preventDefault()
+    this.setState({
+      foundNotes: this.state.noteSearch, noteSearch: "", noteFound: !this.state.noteFound
+
+    })
+  }
+
   handleClick = (event) => {
     const selectednote = this.state.notes.find(note => {
       return note.id === parseInt(event.target.dataset.note_id)
@@ -195,14 +209,24 @@ createNotebook = (notebook) => {
   }
   render() {
 
+    const thenotes = this.state.notes.map(note => {
+    if(note.title.toLowerCase().indexOf(this.state.foundNotes.toLowerCase()) === 0) {
+      return (<div className="info" key={note.id}>title: {note.title} <br /> body: {note.body} <br /> tag: {note.tag} <br/>
+      </div>)
+    } else {
+      return null
+    }
+  })
 
     return (
       <div className={ this.state.loggedIn ? "App" : "SignIn"}>
-        {this.state.loggedIn ? <Sidebar  logoutUser={this.logoutUser} user={this.state.user} /> : ""}
+        {this.state.loggedIn ? <Sidebar  logoutUser={this.logoutUser} user={this.state.user} noteSearch={this.state.noteSearch} handleNoteSearchSubmit={this.handleNoteSearchSubmit} handleNoteSearchChange={this.handleNoteSearchChange} /> : ""}
           <Switch>
             <Route exact path="/signup" render={(props) => <SignUp {...props} signUpUser={this.signUpUser} loginUser={this.loginUser} /> } />
             <Route exact path="/signin" render={(props) => <SignIn {...props} loginUser={this.loginUser} /> } />
-            {this.state.loggedIn ? <Route exact path="/notes" render={(props) => <AllNotes handleClick={this.handleClick}
+            {this.state.loggedIn ? <Route exact path="/notes" render={(props) => <AllNotes thenotes={thenotes} noteFound={this.state.noteFound}
+            noteSearch={this.state.noteSearch}
+            foundNotes={this.state.foundNotes} handleClick={this.handleClick}
             noteSetting={this.noteSetting}
             notebooks={this.state.notebooks}
             notetoedit={this.state.selection}

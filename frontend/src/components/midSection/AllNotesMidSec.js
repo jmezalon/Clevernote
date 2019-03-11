@@ -1,7 +1,9 @@
 import React from 'react';
+import '../../css/midsec.css';
 
 
-export const AllNotesMidSec = ({notes, handleClick}) => {
+
+export const AllNotesMidSec = ({notes, noteFound, thenotes, noteSearch, foundNotes, handleClick}) => {
   let titleList = notes.map((note, i) => {
     return (
       <div data-note_id={note.id} key={note.id} onClick={handleClick}>
@@ -14,7 +16,10 @@ export const AllNotesMidSec = ({notes, handleClick}) => {
     <div className="midsection">
     <h4>All Notes</h4>
     <hr />
-    {titleList.reverse()}
+    {!noteFound ? titleList.reverse() : thenotes}
+    <br />
+    {noteFound ? <p>press search again to go back to allnotes</p> : ""}
+
     </div>
   )
 }

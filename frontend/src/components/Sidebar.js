@@ -1,5 +1,7 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import '../css/sidebar.css';
+
 
 export const Sidebar = (props) => {
   return (
@@ -7,9 +9,10 @@ export const Sidebar = (props) => {
       <div className="profile">
         <NavLink to={'/notes'}><img className="profile_pic" alt="" src={props.user.profile_pic ? props.user.profile_pic : "http://icons.iconarchive.com/icons/pelfusion/long-shadow-media/256/Contact-icon.png"} />{props.user.full_name}</NavLink>
       </div>
-      <div className='searhbar'>
-        <input type='text' className='searchbar' placeholder='search all notes' />
-        </div>
+      <form className='searhbar' onSubmit={props.handleNoteSearchSubmit} >
+        <input type='text' name="noteSearch" value={props.noteSearch} onChange={props.handleNoteSearchChange} placeholder='search all notes by titles' />
+        <input type="submit" value="search" />
+        </form>
         <div className='newNote'>
         <NavLink to={'/new'}>New note</NavLink>
         </div>

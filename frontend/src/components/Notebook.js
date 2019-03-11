@@ -1,5 +1,7 @@
 import React from 'react';
 import NotebookMidSec  from './midSection/NotebookMidSec';
+import '../css/notebook.css';
+
 
 const Notebooks = ({ notebooks, createNotebook, user, getAllNotebooks, getAllNotesFromOneNotebook }) =>{
 
